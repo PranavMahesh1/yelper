@@ -17,8 +17,8 @@ const SearchResults = (props) => {
 
     // Map function to loop through the array of items and displays a card for each restaurant
     let Restaurants = props.restaurantsList.map((item, key) =>
-        <Card key={key} className="card-margin">
-            <Card.Img variant="top" src={item.image_url} height="250" />
+        <Card key={key} className="card-margin" height="300">
+            <Card.Img variant="top" src={item.image_url} height="250"/>
             <Card.Body>
                 <Card.Title>{item.name}</Card.Title>
                 <Card.Text>
@@ -26,11 +26,13 @@ const SearchResults = (props) => {
                 </Card.Text>
                 <Card.Text>Rating: {item.rating} / 5</Card.Text>
                 <Card.Text>Phone: {item.display_phone}</Card.Text>
-                {/* TODO: Move button to same location */}
+                {/* Make sure in most cases that the button will align 
+                to the bottom and won't cover up phone number */}
+                <br />
                 <Button onClick={
                     () => {
                         restaurantDetails(item);
-                    }} variant="primary">More information</Button>
+                    }} style={{position: "absolute", bottom: "1px", marginTop: "16px"}} variant="primary">More information</Button>
             </Card.Body>
         </Card>
     );
