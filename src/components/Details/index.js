@@ -1,11 +1,11 @@
 // The component for when you click 'More information' on a specific restaurant.
 
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Carousel } from 'react-bootstrap';
+import { Container, Row, Col, Carousel, Card, Tab, Tabs } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import axios from 'axios';
-import { FaBeer } from 'react-icons/fa';
+import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from 'react-icons/io';
 
 
 const anywhere = 'https://cors-anywhere.herokuapp.com/';
@@ -47,20 +47,20 @@ const Details = (props) => {
 
   // make sure photos exist before get request
   let ImageSlide = restaurant.photos && restaurant.photos.map((item, key) =>
-      <Carousel.Item>
-        <div style={{
-          overflow: 'hidden',
-          height: '400px'
+    <Carousel.Item>
+      <div style={{
+        overflow: 'hidden',
+        height: '400px'
 
-        }}>
+      }}>
         <img
           className="d-block w-100"
           src={item}
           alt="Restaurant"
-          key = {key}
+          key={key}
         />
-        </div>
-      </Carousel.Item>
+      </div>
+    </Carousel.Item>
   );
 
   const onMarkerClick = (props, marker, e) => {
@@ -81,6 +81,54 @@ const Details = (props) => {
     height: "400px",
     position: "relative"
   };
+
+  function isFloat(n) {
+    return Number(n) === n && n % 1 !== 0;
+  }
+
+
+  const displayRating = () => {
+    const max = restaurant.rating;
+    const emptyStars = 5 - Math.ceil(max);
+    let stars = [];
+    if (isFloat(max)) {
+      const floor = Math.floor(max);
+      for (let i = 1; i <= floor; i++) {
+        stars.push(<IoIosStar color="orange" />);
+      }
+      stars.push(<IoIosStarHalf color="orange" />);
+    } else {
+      for (let i = 1; i <= max; i++) {
+        stars.push(<IoIosStar color="orange" />);
+      }
+    }
+
+    let j = 1;
+    while (j <= emptyStars) {
+      stars.push(<IoIosStarOutline color="orange" />);
+      j++;
+    }
+    console.log("Stars ", stars);
+    return stars;
+  }
+
+  let displayHours = () => {
+    if (restaurant.hours && restaurant.hours[0].open) {
+      const hours = restaurant.hours[0].open;
+      console.log("Hours", (hours.filter(item => item.day === 0)).length > 0);
+      if ((hours.filter(item => item.day === 0)).length > 0) {
+        console.log("Monday");
+      } else {
+        console.log("Not Monday");
+      }
+      if ((hours.filter(item => item.day === 6)).length > 0) {
+        console.log("Sunday");
+      } else {
+        console.log("Closed Sunday");
+      }
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -124,30 +172,36 @@ const Details = (props) => {
           </Map>
         </Row>
 
-        {/* Cuisines */}
-        <Row className="justify-content-md-center">
-          <p className="text"><FaBeer />Cuisines: {Cuisines}</p>
-        </Row>
-
-        {/* General Information */}
-        <Row className="justify-content-md-center">
-          <Col xs lg="9">
-            {/* Display Closed or Open depending on restaurant.is_closed */}
-            <p className="text">{restaurant.is_closed ? "Closed" : "Open"}</p>
-            {/* Some restaurants don't have price value, so don't display if this is the case */}
-            <p className="text">{restaurant.price != null ? `Price: ${restaurant.price}` : null}</p>
-            <p className="text">Rating: {restaurant.rating} / 5</p>
-          </Col>
-
-          <Col>
-            <p className="text">Address: {restaurant.location.address1}, {restaurant.location.city}, {restaurant.location.state} {restaurant.location.zip_code}</p>
-            <p className="text">Phone number: {restaurant.display_phone}</p>
-            <a href={restaurant.url}>Yelp Link</a>
-          </Col>
+        <Row>
+          <p className="text">Open Hours:</p>
         </Row>
 
         <Row>
-          <p className="text">Open Hours:</p>
+          <Card style={{
+            width: '100%'
+          }}>
+            <Card.Header>Restaurant Details</Card.Header>
+
+            <Card.Body>
+              <Tabs defaultActiveKey="general" id="uncontrolled-tab-example">
+                <Tab eventKey="general" title="General">
+                  <p>Cuisines: {Cuisines}</p>
+                  {/* Some restaurants don't have price value, so don't display if this is the case */}
+                  <p>{restaurant.price != null ? `Price: ${restaurant.price}` : null}</p>
+                  <p>Rating: {displayRating()}</p>
+                  <a href={restaurant.url}>Yelp Link</a>
+                </Tab>
+                <Tab eventKey="address" title="Address/Contact">
+                  <p>Address: {restaurant.location.address1}, {restaurant.location.city}, {restaurant.location.state} {restaurant.location.zip_code}</p>
+                  <p>Phone number: {restaurant.display_phone}</p>
+                </Tab>
+                <Tab eventKey="hours" title="Open Hours">
+                  <h1>{displayHours()}</h1>
+                </Tab>
+              </Tabs>
+
+            </Card.Body>
+          </Card>
         </Row>
       </Container>
     </div>

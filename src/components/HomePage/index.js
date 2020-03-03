@@ -1,10 +1,10 @@
 // The component for the home page.
-// TODO: add Google Maps marker, add HTML5 Geolocation, add icons, icon to search
+// TODO: add navbar, about, add icons, icon to search
 
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import SearchResults from './SearchResults';
-import { IoIosRestaurant } from 'react-icons/io';
+import { MdRestaurant, MdLocationCity } from "react-icons/md";
 import axios from 'axios';
 import './style.css';
 
@@ -91,7 +91,7 @@ const HomePage = (props) => {
                                 {/* When Form text changes, call onChangeRestaurant() */}
                                 <InputGroup>
                                     <InputGroup.Prepend>
-                                        <InputGroup.Text id="inputGroupPrepend"><IoIosRestaurant /></InputGroup.Text>
+                                        <InputGroup.Text id="inputGroupPrepend"><MdRestaurant /></InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <Form.Control onChange={onChangeRestaurant} placeholder="Restaurant" />
                                 </InputGroup>
@@ -100,7 +100,12 @@ const HomePage = (props) => {
                             <Form.Group controlId="basic">
                                 <Form.Label className="text">Enter Location</Form.Label>
                                 {/* When Form text changes, call onChangeLocation() */}
+                                <InputGroup>
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroupPrepend"><MdLocationCity /></InputGroup.Text>
+                                    </InputGroup.Prepend>
                                 <Form.Control onChange={onChangeLocation} placeholder="Location (i.e. Atlanta, GA)" />
+                            </InputGroup>
                             </Form.Group>
                         </Form>
 
