@@ -19,7 +19,9 @@ const SearchResults = (props) => {
     let Restaurants = props.restaurantsList.map((item, key) =>
         <Card key={key} className="card-margin" height="300">
             <Card.Img variant="top" src={item.image_url} height="250"/>
-            <Card.Body>
+            <Card.Body style={{
+                height: '240'
+            }}>
                 <Card.Title>{item.name}</Card.Title>
                 <Card.Text>
                     Location: {item.location.address1}, {item.location.city}, {item.location.state} {item.location.zip_code}
@@ -28,12 +30,13 @@ const SearchResults = (props) => {
                 <Card.Text>Phone: {item.display_phone}</Card.Text>
                 {/* Make sure in most cases that the button will align 
                 to the bottom and won't cover up phone number */}
-                <br />
-                <Button onClick={
+            </Card.Body>
+            <Button onClick={
                     () => {
                         restaurantDetails(item);
-                    }} style={{position: "absolute", bottom: "1px", marginTop: "16px"}} variant="primary">More information</Button>
-            </Card.Body>
+                    }} variant="success" style={{
+                        margin: '4px'
+                    }}>More information</Button>
         </Card>
     );
 

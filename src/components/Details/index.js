@@ -1,11 +1,12 @@
 // The component for when you click 'More information' on a specific restaurant.
-// Need Map, Hours, Geolocation
 
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, } from 'react-bootstrap';
+import { Container, Row, Col, Carousel } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import axios from 'axios';
+import { FaBeer } from 'react-icons/fa';
+
 
 const anywhere = 'https://cors-anywhere.herokuapp.com/';
 
@@ -13,40 +14,24 @@ const anywhere = 'https://cors-anywhere.herokuapp.com/';
 const API_KEY = 'yR15w8bu1wHsBvCaLBOTjSE19XdcT0rwnd9CUAkRENxiBHBqkfNj2sAkTx-yzkY4n146e_nXFAo43nQlwWSp3xxCHpoO8kzwBY_aE9OklcwvTEc3x3zEdUdP-epSXnYx';
 
 const Details = (props) => {
-  let state = {
-    showingInfoWindow: false,  //Hides or the shows the infoWindow
-    activeMarker: {},          //Shows the active marker upon click
-    selectedPlace: {}          //Shows the infoWindow to the selected place upon a marker
-  };
 
-  let onMarkerClick = (props, marker, e) =>
-    state.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-
-  let onClose = props => {
-    if (state.showingInfoWindow) {
-      state.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
-    }
-  };
   // Create location object
   let location = useLocation();
-
-  // Restaurant is the prop of location.state - contains the specific restaurant that was clicked on
-
+  // Restaurant is the prop of location.state - contains the specific restaurant that was clicked on  
   let [restaurant, setRestaurant] = useState(location.state.detailsObject);
+  let [showingInfoWindow, setShowInfoWindow] = useState(false); //Hides or the shows the infoWindow
+  let [activeMarker, setActiveMarker] = useState({}); //Shows the active marker upon click
+  let [selectedPlace, setSelectedPlace] = useState({}); //Shows the infoWindow to the selected place upon a marker
+
+
   useEffect(() => {
     axios.get(`${anywhere}https://api.yelp.com/v3/businesses/${restaurant.id}`, {
       headers: {
         Authorization: `Bearer ${API_KEY}`
       }
     }).then((res) => {
-      // Set detailed business info in restaurant state
+      // Set business array in restaurant state
+      console.log("Restaurant data: ", res.data);
       setRestaurant(res.data);
     }).catch((err) => {
       // Otherwise catch error and log it to console
@@ -54,24 +39,54 @@ const Details = (props) => {
     })
   }, []);
 
-  console.log("Restaurant data: ", restaurant);
+  console.log("Restaurant: ", restaurant);
   // Map function to loop through sub-array categories to find type of cuisines
   let Cuisines = restaurant.categories.map((item, key) =>
     <span key={key}>{item.title}, </span>
   );
+
+  // make sure photos exist before get request
+  let ImageSlide = restaurant.photos && restaurant.photos.map((item, key) =>
+      <Carousel.Item>
+        <div style={{
+          overflow: 'hidden',
+          height: '400px'
+
+        }}>
+        <img
+          className="d-block w-100"
+          src={item}
+          alt="Restaurant"
+          key = {key}
+        />
+        </div>
+      </Carousel.Item>
+  );
+
+  const onMarkerClick = (props, marker, e) => {
+    setSelectedPlace(props);
+    setActiveMarker(marker);
+    setShowInfoWindow(true);
+  }
+
+  const onClose = props => {
+    if (showingInfoWindow) {
+      setActiveMarker(null);
+      setShowInfoWindow(false);
+    }
+  };
 
   const mapStyles2 = {
     width: '100%',
     height: "400px",
     position: "relative"
   };
-
   return (
     <div>
       <Container>
         {/* Restaurant Images */}
         <Row className="justify-content-md-center">
-          <img alt="restaurant" src={restaurant.image_url} height="400" width="700" />
+          <Carousel>{ImageSlide}</Carousel>
         </Row>
         <br />
 
@@ -87,30 +102,31 @@ const Details = (props) => {
             style={mapStyles2}
             containerStyle={mapStyles2}
             zoom={20}
-            mapCenter={{
-
-            }}
             initialCenter={{
               lat: restaurant.coordinates.latitude,
               lng: restaurant.coordinates.longitude
             }}
-          />
-          <Marker
-            title={'The marker`s title will appear as a tooltip.'}
-            name={'SOMA'}
-            onClick={onMarkerClick}
-            position={{ lat: restaurant.coordinates.latitude, lng: restaurant.coordinates.longitude }}
-          />
-          <InfoWindow
-            marker={state.activeMarker}
-            visible={state.showingInfoWindow}
-            onClose={onClose}
-          ></InfoWindow>
+          >
+            <Marker
+              title={'The marker`s title will appear as a tooltip.'} //mouse over
+              name={'SOMA'}
+              onClick={onMarkerClick}
+              position={{ lat: restaurant.coordinates.latitude, lng: restaurant.coordinates.longitude }}
+            />
+            <InfoWindow
+              marker={activeMarker}
+              visible={showingInfoWindow}
+              onClose={onClose}
+            >
+              <h4>{restaurant.name}</h4>
+
+            </InfoWindow>
+          </Map>
         </Row>
 
         {/* Cuisines */}
         <Row className="justify-content-md-center">
-          <p className="text">Cuisines: {Cuisines}</p>
+          <p className="text"><FaBeer />Cuisines: {Cuisines}</p>
         </Row>
 
         {/* General Information */}
@@ -131,7 +147,6 @@ const Details = (props) => {
         </Row>
 
         <Row>
-          <p className="text">Open Hours:</p>
           <p className="text">Open Hours:</p>
         </Row>
       </Container>

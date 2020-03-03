@@ -1,10 +1,10 @@
 // The component for the home page.
-// TODO: add Google Maps marker, add HTML5 Geolocation, add icons
+// TODO: add Google Maps marker, add HTML5 Geolocation, add icons, icon to search
 
-import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import SearchResults from './SearchResults';
-import { IoIosSearch } from 'react-icons/io';
+import { IoIosRestaurant } from 'react-icons/io';
 import axios from 'axios';
 import './style.css';
 
@@ -19,7 +19,25 @@ const HomePage = (props) => {
     let [restaurant, setRestaurant] = useState("");
     let [location, setLocation] = useState("");
     let [restaurantsList, setRestaurantsList] = useState([]);
-    //let [restaurantsID, setRestaurantsID] = useState("");
+    let [geoLocation, setGeoLocation] = useState({});
+    const geo = navigator.geolocation;
+    let getLocation = () => {
+        if (!geo) {
+            console.log("Location API is not supported/available");
+        } else {
+            geo.getCurrentPosition((position) => {
+                // success callback
+                console.log("Location: ", position.coords.latitude, position.coords.longitude);
+                setGeoLocation(position.coords);
+            }, (err) => {
+
+            })
+        }
+    };
+
+    useEffect(() => {
+        getLocation();
+    }, []);
 
     // Set the restaurant text in the restaurant state
     const onChangeRestaurant = (event) => {
@@ -29,6 +47,21 @@ const HomePage = (props) => {
     // Set the location text in the location state
     const onChangeLocation = (event) => {
         setLocation(event.target.value);
+    }
+
+    const searchGeoRestaurant = (event) => {
+        // Send a GET request to the Yelp API and filter businesses to food
+        axios.get(`${anywhere}https://api.yelp.com/v3/businesses/search?term=${restaurant}&categories=food&latitude=${geoLocation.latitude}&longitude=${geoLocation.longitude}&radius=15000`, {
+            headers: {
+                Authorization: `Bearer ${API_KEY}`
+            }
+        }).then((res) => {
+            // Set business array in restaurantsList state
+            setRestaurantsList(res.data.businesses);
+        }).catch((err) => {
+            // Otherwise catch error and log it to console
+            console.log("Error occured: ", err);
+        })
     }
 
     const searchRestaurant = (event) => {
@@ -56,7 +89,12 @@ const HomePage = (props) => {
                             <Form.Group controlId="basic">
                                 <Form.Label className="text">Enter Restaurant</Form.Label>
                                 {/* When Form text changes, call onChangeRestaurant() */}
-                                <Form.Control onChange={onChangeRestaurant} placeholder="Restaurant" />
+                                <InputGroup>
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroupPrepend"><IoIosRestaurant /></InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <Form.Control onChange={onChangeRestaurant} placeholder="Restaurant" />
+                                </InputGroup>
                             </Form.Group>
 
                             <Form.Group controlId="basic">
@@ -65,15 +103,15 @@ const HomePage = (props) => {
                                 <Form.Control onChange={onChangeLocation} placeholder="Location (i.e. Atlanta, GA)" />
                             </Form.Group>
                         </Form>
-                        
+
                         {/* When button is pressed, call searchRestaurant() */}
-                        <Button variant="primary" onClick={searchRestaurant} className="text">Submit</Button>
-                        <Button variant="primary" onClick={searchRestaurant} className="float-right && text">Submit with Your Location</Button>
+                        <Button variant="light" onClick={searchRestaurant}>Submit</Button>
+                        <Button variant="light" onClick={searchGeoRestaurant} className="float-right">Submit with Your Location</Button>
                     </Col>
                 </Row>
 
                 {/* If restaurantsList length > 0, show SearchResults component, otherwise don't show */}
-                { restaurantsList.length > 0 ? <SearchResults restaurantsList={restaurantsList} /> : null   }
+                {restaurantsList.length > 0 ? <SearchResults restaurantsList={restaurantsList} /> : null}
             </Container>
         </div>
     );
