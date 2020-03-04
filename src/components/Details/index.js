@@ -1,7 +1,7 @@
 // The component for when you click 'More information' on a specific restaurant.
-
+// alphabetical order
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Carousel, Card, Tab, Tabs } from 'react-bootstrap';
+import { Container, Row, Carousel, Card, Tab, Tabs, Table, Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import axios from 'axios';
@@ -113,21 +113,162 @@ const Details = (props) => {
   }
 
   let displayHours = () => {
+    let hourList = [];
+    let day = "";
     if (restaurant.hours && restaurant.hours[0].open) {
       const hours = restaurant.hours[0].open;
-      console.log("Hours", (hours.filter(item => item.day === 0)).length > 0);
       if ((hours.filter(item => item.day === 0)).length > 0) {
-        console.log("Monday");
+        // checking the day
+        day = hours.filter(item => item.day === 0);
+        hourList.push(
+          <tr>
+            <td>Monday</td>
+            <td>{timeConvert(day[0].start)} - {timeConvert(day[0].end)}</td>
+          </tr>
+        );
       } else {
-        console.log("Not Monday");
+        hourList.push(
+          <tr>
+            <td>Monday</td>
+            <td style={{
+              color: 'red'
+            }}>Closed</td>
+          </tr>
+        );
+      }
+      if ((hours.filter(item => item.day === 1)).length > 0) {
+        day = hours.filter(item => item.day === 1);
+        hourList.push(
+          <tr>
+            <td>Tuesday</td>
+            <td>{timeConvert(day[0].start)} - {timeConvert(day[0].end)}</td>
+          </tr>
+        );
+      } else {
+        hourList.push(
+          <tr>
+            <td>Tuesday</td>
+            <td style={{
+              color: 'red'
+            }}>Closed</td>
+          </tr>
+        );
+      }
+      if ((hours.filter(item => item.day === 2)).length > 0) {
+        day = hours.filter(item => item.day === 2);
+        hourList.push(
+          <tr>
+            <td>Wednesday</td>
+            <td>{timeConvert(day[0].start)} - {timeConvert(day[0].end)}</td>
+          </tr>
+        );
+      } else {
+        hourList.push(
+          <tr>
+            <td>Wednesday</td>
+            <td style={{
+              color: 'red'
+            }}>Closed</td>
+          </tr>
+        );
+      }
+      if ((hours.filter(item => item.day === 3)).length > 0) {
+        day = hours.filter(item => item.day === 3);
+        hourList.push(
+          <tr>
+            <td>Thursday</td>
+            <td>{timeConvert(day[0].start)} - {timeConvert(day[0].end)}</td>
+          </tr>
+        );
+      } else {
+        hourList.push(
+          <tr>
+            <td>Thursday</td>
+            <td style={{
+              color: 'red'
+            }}>Closed</td>
+          </tr>
+        );
+      }
+      if ((hours.filter(item => item.day === 4)).length > 0) {
+        day = hours.filter(item => item.day === 4);
+        hourList.push(
+          <tr>
+            <td>Friday</td>
+            <td>{timeConvert(day[0].start)} - {timeConvert(day[0].end)}</td>
+          </tr>
+        );
+      } else {
+        hourList.push(
+          <tr>
+            <td>Friday</td>
+            <td style={{
+              color: 'red'
+            }}>Closed</td>
+          </tr>
+        );
+      }
+      if ((hours.filter(item => item.day === 5)).length > 0) {
+        day = hours.filter(item => item.day === 5);
+        hourList.push(
+          <tr>
+            <td>Saturday</td>
+            <td>{timeConvert(day[0].start)} - {timeConvert(day[0].end)}</td>
+          </tr>
+        );
+      } else {
+        hourList.push(
+          <tr>
+            <td>Saturday</td>
+            <td style={{
+              color: 'red'
+            }}>Closed</td>
+          </tr>
+        );
       }
       if ((hours.filter(item => item.day === 6)).length > 0) {
-        console.log("Sunday");
+        day = hours.filter(item => item.day === 6);
+        hourList.push(
+          <tr>
+            <td>Sunday</td>
+            <td>{timeConvert(day[0].start)} - {timeConvert(day[0].end)}</td>
+          </tr>
+        );
       } else {
-        console.log("Closed Sunday");
+        hourList.push(
+          <tr>
+            <td>Sunday</td>
+            <td style={{
+              color: 'red'
+            }}>Closed</td>
+          </tr>
+        );
       }
     }
+    return (
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          {hourList}
+        </tbody>
+      </Table>
+    );
   };
+
+  const timeConvert = (time) => {
+    // Check correct time format and split into components
+    time = time.toString().match(/^([01]\d|2[0-3])([0-5]\d)/);
+    let formatedTime = '';
+    if (time.length > 1) { // If time format correct
+      formatedTime = (time[1] % 12 || 12) + ":" + time[2] + (time[1] < 12 ? ' AM' : ' PM')
+    }
+    return formatedTime; // return adjusted time or original string
+  }
 
   return (
     <div>
@@ -145,6 +286,10 @@ const Details = (props) => {
 
         {/* Google Maps */}
         <Row className="justify-content-md-center">
+        <Card style={{
+            width: '100%'
+          }}>
+            <Card.Body>
           <Map
             google={props.google}
             style={mapStyles2}
@@ -170,33 +315,38 @@ const Details = (props) => {
 
             </InfoWindow>
           </Map>
+          </Card.Body>
+          </Card>
         </Row>
 
-        <Row>
-          <p className="text">Open Hours:</p>
-        </Row>
-
-        <Row>
+        <Row style={{
+          marginTop: '16px'
+        }}>
           <Card style={{
             width: '100%'
           }}>
             <Card.Header>Restaurant Details</Card.Header>
-
             <Card.Body>
               <Tabs defaultActiveKey="general" id="uncontrolled-tab-example">
-                <Tab eventKey="general" title="General">
+                <Tab style={{
+                  padding: '16px'
+                }} eventKey="general" title="General">
                   <p>Cuisines: {Cuisines}</p>
                   {/* Some restaurants don't have price value, so don't display if this is the case */}
                   <p>{restaurant.price != null ? `Price: ${restaurant.price}` : null}</p>
                   <p>Rating: {displayRating()}</p>
-                  <a href={restaurant.url}>Yelp Link</a>
+                  <a variant="outline-primary" target="_blank" rel="noopener noreferrer" href={restaurant.url}><Button variant="outline-primary">Primary</Button></a>
                 </Tab>
-                <Tab eventKey="address" title="Address/Contact">
+                <Tab style={{
+                  padding: '16px'
+                }} eventKey="address" title="Address/Contact">
                   <p>Address: {restaurant.location.address1}, {restaurant.location.city}, {restaurant.location.state} {restaurant.location.zip_code}</p>
                   <p>Phone number: {restaurant.display_phone}</p>
                 </Tab>
-                <Tab eventKey="hours" title="Open Hours">
-                  <h1>{displayHours()}</h1>
+                <Tab style={{
+                  padding: '16px'
+                }} eventKey="hours" title="Open Hours">
+                  <p>{displayHours()}</p>
                 </Tab>
               </Tabs>
 
