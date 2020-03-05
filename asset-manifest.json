@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/restaurant-searcher/static/css/main.3de15958.chunk.css",
+    "main.js": "/restaurant-searcher/static/js/main.5495ca7f.chunk.js",
+    "main.js.map": "/restaurant-searcher/static/js/main.5495ca7f.chunk.js.map",
+    "runtime-main.js": "/restaurant-searcher/static/js/runtime-main.43aa011f.js",
+    "runtime-main.js.map": "/restaurant-searcher/static/js/runtime-main.43aa011f.js.map",
+    "static/css/2.47e06e2e.chunk.css": "/restaurant-searcher/static/css/2.47e06e2e.chunk.css",
+    "static/js/2.89ef1759.chunk.js": "/restaurant-searcher/static/js/2.89ef1759.chunk.js",
+    "static/js/2.89ef1759.chunk.js.map": "/restaurant-searcher/static/js/2.89ef1759.chunk.js.map",
+    "index.html": "/restaurant-searcher/index.html",
+    "precache-manifest.356061a66e7d98767cb42c8d552591b8.js": "/restaurant-searcher/precache-manifest.356061a66e7d98767cb42c8d552591b8.js",
+    "service-worker.js": "/restaurant-searcher/service-worker.js",
+    "static/css/2.47e06e2e.chunk.css.map": "/restaurant-searcher/static/css/2.47e06e2e.chunk.css.map",
+    "static/css/main.3de15958.chunk.css.map": "/restaurant-searcher/static/css/main.3de15958.chunk.css.map",
+    "static/js/2.89ef1759.chunk.js.LICENSE.txt": "/restaurant-searcher/static/js/2.89ef1759.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.43aa011f.js",
+    "static/css/2.47e06e2e.chunk.css",
+    "static/js/2.89ef1759.chunk.js",
+    "static/css/main.3de15958.chunk.css",
+    "static/js/main.5495ca7f.chunk.js"
+  ]
+}
