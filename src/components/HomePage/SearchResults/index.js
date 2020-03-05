@@ -2,7 +2,7 @@
 
 import React, { } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Row, Button, Card } from 'react-bootstrap';
+import { Button, Card, Container, Row } from 'react-bootstrap';
 import './style.css';
 
 const SearchResults = (props) => {
@@ -18,13 +18,14 @@ const SearchResults = (props) => {
     // Map function to loop through the array of items and displays a card for each restaurant
     let Restaurants = props.restaurantsList.map((item, key) =>
         <Card key={key} className="card-margin" height="300">
-            <Card.Img variant="top" src={item.image_url} height="250"/>
+            <Card.Img variant="top" src={item.image_url} height="250" />
             <Card.Body style={{
                 height: '240'
             }}>
                 <Card.Title>{item.name}</Card.Title>
                 <Card.Text>
-                    Location: {item.location.address1}, {item.location.city}, {item.location.state} {item.location.zip_code}
+                    {/* If item does not have address1, don't display it  */}
+                    {item.location.address1 !== "" ? `Location: ${item.location.address1}, ${item.location.city}, ${item.location.state} ${item.location.zip_code}` : `Location: ${item.location.city}, ${item.location.state} ${item.location.zip_code}`}
                 </Card.Text>
                 <Card.Text>Rating: {item.rating} / 5</Card.Text>
                 <Card.Text>Phone: {item.display_phone}</Card.Text>
@@ -32,11 +33,11 @@ const SearchResults = (props) => {
                 to the bottom and won't cover up phone number */}
             </Card.Body>
             <Button onClick={
-                    () => {
-                        restaurantDetails(item);
-                    }} variant="success" style={{
-                        margin: '4px'
-                    }}>More information</Button>
+                () => {
+                    restaurantDetails(item);
+                }} variant="success" style={{
+                    margin: '4px'
+                }}>More information</Button>
         </Card>
     );
 

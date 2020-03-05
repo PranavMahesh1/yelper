@@ -1,5 +1,5 @@
 // The component for when you click 'More information' on a specific restaurant.
-/*
+/* Remove console.logs
 // Put all the details from business in the Details page
 // Add the Star ratings and Price, address, location icons to the Search Results Cards
 // Add the Input fields for the filters. 
@@ -18,7 +18,10 @@ import { MdLocalPhone, MdLocationOn } from 'react-icons/md';
 const anywhere = 'https://cors-anywhere.herokuapp.com/';
 
 // Enter your own Yelp Fusion API key here
-const API_KEY = 'yR15w8bu1wHsBvCaLBOTjSE19XdcT0rwnd9CUAkRENxiBHBqkfNj2sAkTx-yzkY4n146e_nXFAo43nQlwWSp3xxCHpoO8kzwBY_aE9OklcwvTEc3x3zEdUdP-epSXnYx';
+const YELP_API_KEY = 'yR15w8bu1wHsBvCaLBOTjSE19XdcT0rwnd9CUAkRENxiBHBqkfNj2sAkTx-yzkY4n146e_nXFAo43nQlwWSp3xxCHpoO8kzwBY_aE9OklcwvTEc3x3zEdUdP-epSXnYx';
+
+// Enter your own Google Maps API key here
+const MAPS_API_KEY = 'AIzaSyBKkqON7yV0e9pLsxgZeoR8l917lbOEOrU';
 
 const Details = (props) => {
 
@@ -34,7 +37,7 @@ const Details = (props) => {
   useEffect(() => {
     axios.get(`${anywhere}https://api.yelp.com/v3/businesses/${restaurant.id}`, {
       headers: {
-        Authorization: `Bearer ${API_KEY}`
+        Authorization: `Bearer ${YELP_API_KEY}`
       }
     }).then((res) => {
       // Set business array in restaurant state
@@ -46,7 +49,6 @@ const Details = (props) => {
     })
   }, []);
 
-  console.log("Restaurant: ", restaurant);
   // Map function to loop through sub-array categories to find type of cuisines
   let Cuisines = restaurant.categories.map((item, key) =>
     <span key={key}>{item.title}, </span>
@@ -66,7 +68,7 @@ const Details = (props) => {
           alt="Restaurant"
           key={key}
           style={{
-            backgroundPosition: 'center center' 
+            backgroundPosition: 'center center'
           }}
         />
       </div>
@@ -118,7 +120,6 @@ const Details = (props) => {
       stars.push(<IoIosStarOutline color="orange" />);
       j++;
     }
-    console.log("Stars ", stars);
     return stars;
   }
 
@@ -305,14 +306,14 @@ const Details = (props) => {
               padding: '0.5rem'
             }}>
               <Carousel>{ImageSlide}</Carousel>
-              </Card.Body>
-              </Card>
+            </Card.Body>
+          </Card>
         </Row>
         <br />
 
         {/* Restaurant Title */}
         <Row className="justify-content-md-center">
-          
+
         </Row>
 
         {/* Google Maps */}
@@ -322,7 +323,7 @@ const Details = (props) => {
           }}>
             <Card.Header>
               <center><h1>{restaurant.name}</h1></center>
-              </Card.Header>
+            </Card.Header>
             <Card.Body style={{
               padding: '0rem'
             }}>
@@ -378,7 +379,7 @@ const Details = (props) => {
                 <Tab style={{
                   padding: '16px'
                 }} eventKey="address" title="Address/Contact">
-                  <p><MdLocationOn color="#e53935" /> {restaurant.location.address1}, {restaurant.location.city}, {restaurant.location.state} {restaurant.location.zip_code}</p>
+                  <p><MdLocationOn color="#e53935" /> {restaurant.location.address1 !== "" ? `Location: ${restaurant.location.address1}, ${restaurant.location.city}, ${restaurant.location.state} ${restaurant.location.zip_code}` : `Location: ${restaurant.location.city}, ${restaurant.location.state} ${restaurant.location.zip_code}`}</p>
                   <p><MdLocalPhone color="#e53935" /> <a href={`tel:${restaurant.phone}`}>{restaurant.display_phone}</a></p>
                 </Tab>
                 <Tab style={{
@@ -397,5 +398,5 @@ const Details = (props) => {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBKkqON7yV0e9pLsxgZeoR8l917lbOEOrU'
+  apiKey: `${MAPS_API_KEY}`
 })(Details);

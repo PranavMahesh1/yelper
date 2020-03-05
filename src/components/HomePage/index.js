@@ -1,12 +1,11 @@
 // The component for the home page.
-// TODO: add navbar, about, add icons, icon to search
 
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
-import SearchResults from './SearchResults';
-import { MdRestaurant, MdLocationCity } from "react-icons/md";
 import axios from 'axios';
 import './style.css';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
+import SearchResults from './SearchResults';
+import { MdLocationCity, MdRestaurant } from "react-icons/md";
 
 const anywhere = 'https://cors-anywhere.herokuapp.com/';
 
@@ -105,8 +104,8 @@ const HomePage = (props) => {
                                     <InputGroup.Prepend>
                                         <InputGroup.Text id="inputGroupPrepend"><MdLocationCity /></InputGroup.Text>
                                     </InputGroup.Prepend>
-                                <Form.Control onChange={onChangeLocation} placeholder="Location (i.e. Atlanta, GA)" />
-                            </InputGroup>
+                                    <Form.Control onChange={onChangeLocation} placeholder="Location (i.e. Atlanta, GA)" />
+                                </InputGroup>
                             </Form.Group>
                         </Form>
 
