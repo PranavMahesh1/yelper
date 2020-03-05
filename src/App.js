@@ -3,7 +3,6 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomePage from './components/HomePage';
 import Details from './components/Details';
-import About from './components/About';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -14,10 +13,6 @@ function App() {
       <Switch>
         <Route path="/details">
           <Details />
-        </Route>
-
-        <Route path="/about">
-          <About />
         </Route>
 
         <Route path="/">
