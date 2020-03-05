@@ -1,11 +1,18 @@
 // The component for when you click 'More information' on a specific restaurant.
-// alphabetical order
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Carousel, Card, Tab, Tabs, Table, Button } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+/*
+// Put all the details from business in the Details page
+// Add the Star ratings and Price, address, location icons to the Search Results Cards
+// Add the Input fields for the filters. 
+*/
+
 import axios from 'axios';
-import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from 'react-icons/io';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Carousel, Container, Row, Tab, Table, Tabs } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
+import { GoogleApiWrapper, InfoWindow, Marker, Map } from 'google-maps-react';
+import { IoIosStarHalf, IoIosStarOutline, IoIosStar } from 'react-icons/io';
+import { FaDollarSign } from 'react-icons/fa';
+import { MdLocalPhone, MdLocationOn } from 'react-icons/md';
 
 
 const anywhere = 'https://cors-anywhere.herokuapp.com/';
@@ -58,6 +65,9 @@ const Details = (props) => {
           src={item}
           alt="Restaurant"
           key={key}
+          style={{
+            backgroundPosition: 'center center' 
+          }}
         />
       </div>
     </Carousel.Item>
@@ -270,52 +280,78 @@ const Details = (props) => {
     return formatedTime; // return adjusted time or original string
   }
 
+  const displayPrice = () => {
+    const price = restaurant.price;
+    let prices = [];
+    if (price != null) {
+      prices.push(<span>Price: </span>);
+      for (let i = 0; i < price.length; i++) {
+        prices.push(<FaDollarSign color="green" />);
+      }
+    }
+    return prices;
+  }
+
+  // Actual return of Details component
   return (
     <div>
       <Container>
         {/* Restaurant Images */}
         <Row className="justify-content-md-center">
-          <Carousel>{ImageSlide}</Carousel>
+          <Card style={{
+            width: '100%'
+          }}>
+            <Card.Body style={{
+              padding: '0.5rem'
+            }}>
+              <Carousel>{ImageSlide}</Carousel>
+              </Card.Body>
+              </Card>
         </Row>
         <br />
 
         {/* Restaurant Title */}
         <Row className="justify-content-md-center">
-          <h1 className="heading">{restaurant.name}</h1>
+          
         </Row>
 
         {/* Google Maps */}
         <Row className="justify-content-md-center">
-        <Card style={{
+          <Card style={{
             width: '100%'
           }}>
-            <Card.Body>
-          <Map
-            google={props.google}
-            style={mapStyles2}
-            containerStyle={mapStyles2}
-            zoom={20}
-            initialCenter={{
-              lat: restaurant.coordinates.latitude,
-              lng: restaurant.coordinates.longitude
-            }}
-          >
-            <Marker
-              title={'The marker`s title will appear as a tooltip.'} //mouse over
-              name={'SOMA'}
-              onClick={onMarkerClick}
-              position={{ lat: restaurant.coordinates.latitude, lng: restaurant.coordinates.longitude }}
-            />
-            <InfoWindow
-              marker={activeMarker}
-              visible={showingInfoWindow}
-              onClose={onClose}
-            >
-              <h4>{restaurant.name}</h4>
+            <Card.Header>
+              <center><h1>{restaurant.name}</h1></center>
+              </Card.Header>
+            <Card.Body style={{
+              padding: '0rem'
+            }}>
+              <Map
+                google={props.google}
+                style={mapStyles2}
+                containerStyle={mapStyles2}
+                zoom={20}
+                initialCenter={{
+                  lat: restaurant.coordinates.latitude,
+                  lng: restaurant.coordinates.longitude
+                }}
+              >
+                <Marker
+                  title={'The marker`s title will appear as a tooltip.'} //mouse over
+                  name={'SOMA'}
+                  onClick={onMarkerClick}
+                  position={{ lat: restaurant.coordinates.latitude, lng: restaurant.coordinates.longitude }}
+                />
+                <InfoWindow
+                  marker={activeMarker}
+                  visible={showingInfoWindow}
+                  onClose={onClose}
+                >
+                  <h4>{restaurant.name}</h4>
 
-            </InfoWindow>
-          </Map>
-          </Card.Body>
+                </InfoWindow>
+              </Map>
+            </Card.Body>
           </Card>
         </Row>
 
@@ -333,15 +369,17 @@ const Details = (props) => {
                 }} eventKey="general" title="General">
                   <p>Cuisines: {Cuisines}</p>
                   {/* Some restaurants don't have price value, so don't display if this is the case */}
-                  <p>{restaurant.price != null ? `Price: ${restaurant.price}` : null}</p>
-                  <p>Rating: {displayRating()}</p>
-                  <a variant="outline-primary" target="_blank" rel="noopener noreferrer" href={restaurant.url}><Button variant="outline-primary">Primary</Button></a>
+                  <p>
+                    {displayPrice()}
+                  </p>
+                  <p>Rating: {displayRating()} {restaurant.review_count} reviews</p>
+                  <a variant="outline-primary" target="_blank" rel="noopener noreferrer" href={restaurant.url}><Button variant="outline-primary">Yelp Link</Button></a>
                 </Tab>
                 <Tab style={{
                   padding: '16px'
                 }} eventKey="address" title="Address/Contact">
-                  <p>Address: {restaurant.location.address1}, {restaurant.location.city}, {restaurant.location.state} {restaurant.location.zip_code}</p>
-                  <p>Phone number: {restaurant.display_phone}</p>
+                  <p><MdLocationOn color="#e53935" /> {restaurant.location.address1}, {restaurant.location.city}, {restaurant.location.state} {restaurant.location.zip_code}</p>
+                  <p><MdLocalPhone color="#e53935" /> <a href={`tel:${restaurant.phone}`}>{restaurant.display_phone}</a></p>
                 </Tab>
                 <Tab style={{
                   padding: '16px'

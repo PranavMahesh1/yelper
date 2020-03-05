@@ -55,6 +55,7 @@ const HomePage = (props) => {
             headers: {
                 Authorization: `Bearer ${API_KEY}`
             }
+            // save price in state
         }).then((res) => {
             // Set business array in restaurantsList state
             setRestaurantsList(res.data.businesses);
