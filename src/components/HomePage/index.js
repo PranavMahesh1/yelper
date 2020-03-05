@@ -67,7 +67,7 @@ const HomePage = (props) => {
 
     const searchRestaurant = (event) => {
         // Send a GET request to the Yelp API and filter businesses to food
-        axios.get(`${anywhere}https://api.yelp.com/v3/businesses/search?term=${restaurant}&categories=food&location=${location}&offset=51&limit=50`, {
+        axios.get(`${anywhere}https://api.yelp.com/v3/businesses/search?term=${restaurant}&categories=food&location=${location}`, {
             headers: {
                 Authorization: `Bearer ${API_KEY}`
             }
