@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/restaurant-searcher/static/css/main.926339e7.chunk.css",
-    "main.js": "/restaurant-searcher/static/js/main.f690981e.chunk.js",
-    "main.js.map": "/restaurant-searcher/static/js/main.f690981e.chunk.js.map",
+    "main.css": "/restaurant-searcher/static/css/main.7ab682bd.chunk.css",
+    "main.js": "/restaurant-searcher/static/js/main.4539374c.chunk.js",
+    "main.js.map": "/restaurant-searcher/static/js/main.4539374c.chunk.js.map",
     "runtime-main.js": "/restaurant-searcher/static/js/runtime-main.43aa011f.js",
     "runtime-main.js.map": "/restaurant-searcher/static/js/runtime-main.43aa011f.js.map",
     "static/css/2.47e06e2e.chunk.css": "/restaurant-searcher/static/css/2.47e06e2e.chunk.css",
-    "static/js/2.7d7bc7d0.chunk.js": "/restaurant-searcher/static/js/2.7d7bc7d0.chunk.js",
-    "static/js/2.7d7bc7d0.chunk.js.map": "/restaurant-searcher/static/js/2.7d7bc7d0.chunk.js.map",
+    "static/js/2.b0b7e0da.chunk.js": "/restaurant-searcher/static/js/2.b0b7e0da.chunk.js",
+    "static/js/2.b0b7e0da.chunk.js.map": "/restaurant-searcher/static/js/2.b0b7e0da.chunk.js.map",
     "index.html": "/restaurant-searcher/index.html",
-    "precache-manifest.addd6b39b1a06149b4962ee411d9710e.js": "/restaurant-searcher/precache-manifest.addd6b39b1a06149b4962ee411d9710e.js",
+    "precache-manifest.8cdbaab17beca58583b2c710478fe416.js": "/restaurant-searcher/precache-manifest.8cdbaab17beca58583b2c710478fe416.js",
     "service-worker.js": "/restaurant-searcher/service-worker.js",
     "static/css/2.47e06e2e.chunk.css.map": "/restaurant-searcher/static/css/2.47e06e2e.chunk.css.map",
-    "static/css/main.926339e7.chunk.css.map": "/restaurant-searcher/static/css/main.926339e7.chunk.css.map",
-    "static/js/2.7d7bc7d0.chunk.js.LICENSE.txt": "/restaurant-searcher/static/js/2.7d7bc7d0.chunk.js.LICENSE.txt"
+    "static/css/main.7ab682bd.chunk.css.map": "/restaurant-searcher/static/css/main.7ab682bd.chunk.css.map",
+    "static/js/2.b0b7e0da.chunk.js.LICENSE.txt": "/restaurant-searcher/static/js/2.b0b7e0da.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.43aa011f.js",
     "static/css/2.47e06e2e.chunk.css",
-    "static/js/2.7d7bc7d0.chunk.js",
-    "static/css/main.926339e7.chunk.css",
-    "static/js/main.f690981e.chunk.js"
+    "static/js/2.b0b7e0da.chunk.js",
+    "static/css/main.7ab682bd.chunk.css",
+    "static/js/main.4539374c.chunk.js"
   ]
 }
