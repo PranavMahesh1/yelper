@@ -66,7 +66,7 @@ const SearchResults = (props) => {
           let addresses = [];
           addresses.push(<MdLocationOn color="#e53935" />);
         if (item.address1 && item.address1 !== "") {
-            addresses.push(`${item.address1}`)
+            addresses.push(` ${item.address1}, `)
         }
         addresses.push(`${item.city}, ${item.state} ${item.zip_code}`);
         return addresses;
@@ -85,7 +85,7 @@ const SearchResults = (props) => {
                 </Card.Text>
                 <Card.Text>{displayPrice(item.price, key)}</Card.Text>
                 <Card.Text>Rating: {displayRating(item.rating)}</Card.Text>
-                <Card.Text><MdLocalPhone color="#e53935" /> {item.display_phone}</Card.Text>
+                <Card.Text><MdLocalPhone color="#e53935" />&nbsp;<a href={`tel:${item.phone}`}>{item.display_phone}</a></Card.Text>
                 {/* Make sure in most cases that the button will align 
                 to the bottom and won't cover up phone number */}
             </Card.Body>

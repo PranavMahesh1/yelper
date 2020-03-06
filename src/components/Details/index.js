@@ -377,7 +377,7 @@ const Details = (props) => {
                 <Tab style={{
                   padding: '16px'
                 }} eventKey="address" title="Address/Contact">
-                  <p><MdLocationOn color="#e53935" /> {restaurant.location.address1 !== "" ? `Location: ${restaurant.location.address1}, ${restaurant.location.city}, ${restaurant.location.state} ${restaurant.location.zip_code}` : `Location: ${restaurant.location.city}, ${restaurant.location.state} ${restaurant.location.zip_code}`}</p>
+                  <p><MdLocationOn color="#e53935" /> {restaurant.location.address1 !== "" ? `${restaurant.location.address1}, ${restaurant.location.city}, ${restaurant.location.state} ${restaurant.location.zip_code}` : `${restaurant.location.city}, ${restaurant.location.state} ${restaurant.location.zip_code}`}</p>
                   <p><MdLocalPhone color="#e53935" /> <a href={`tel:${restaurant.phone}`}>{restaurant.display_phone}</a></p>
                 </Tab>
                 <Tab style={{
