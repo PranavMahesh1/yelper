@@ -1,9 +1,12 @@
 // The component for the home page.
-
+// Loading screen
+// Search for one restaurant - don't show others
+// Instructions
+// Geolocation only if press button
 import axios from 'axios';
 import './style.css';
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, FormControl, InputGroup, Row } from 'react-bootstrap';
 import SearchResults from './SearchResults';
 import { MdLocationCity, MdRestaurant } from "react-icons/md";
 
@@ -19,6 +22,8 @@ const HomePage = (props) => {
     let [location, setLocation] = useState("");
     let [restaurantsList, setRestaurantsList] = useState([]);
     let [geoLocation, setGeoLocation] = useState({});
+    let [priceFilter, setPriceFilter] = useState();
+    
     const geo = navigator.geolocation;
     let getLocation = () => {
         if (!geo) {
@@ -84,10 +89,11 @@ const HomePage = (props) => {
                 <Row className="justify-content-md-center">
                     <Col xs="6">
                         <h1 className="heading">Restaurant-Searcher</h1>
+                        <p className="text">Enter the restaurant type/name and location and click Submit, or enter just the restaurant and click Submit with Your Location.</p>
                         {/* Form for entering Restaurant Name and Location */}
                         <Form>
                             <Form.Group controlId="basic">
-                                <Form.Label className="text">Enter Restaurant</Form.Label>
+                                <Form.Label className="text">Enter Restaurant Name/Type</Form.Label>
                                 {/* When Form text changes, call onChangeRestaurant() */}
                                 <InputGroup>
                                     <InputGroup.Prepend>
@@ -112,7 +118,20 @@ const HomePage = (props) => {
                         {/* When button is pressed, call searchRestaurant() */}
                         <Button variant="light" onClick={searchRestaurant}>Submit</Button>
                         <Button variant="light" onClick={searchGeoRestaurant} className="float-right">Submit with Your Location</Button>
-                    </Col>
+                        <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                    <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+                                </InputGroup.Prepend>
+                                <FormControl aria-label="Text input with checkbox" />
+                            </InputGroup>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                    <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+                                </InputGroup.Prepend>
+                                <FormControl aria-label="Text input with checkbox" />
+                            </InputGroup>
+                        </Col>
+                    
                 </Row>
 
                 {/* If restaurantsList length > 0, show SearchResults component, otherwise don't show */}

@@ -1,5 +1,5 @@
 // The component for when you click 'More information' on a specific restaurant.
-/* Remove console.logs
+/* 
 // Put all the details from business in the Details page
 // Add the Star ratings and Price, address, location icons to the Search Results Cards
 // Add the Input fields for the filters. 
@@ -98,7 +98,10 @@ const Details = (props) => {
     return Number(n) === n && n % 1 !== 0;
   }
 
-
+  /* Function that takes the rating and converts it to stars.
+     Accounts for if the rating is between a whole number and that plus 0.5,
+     but may not be necessary for the Yelp API.
+  */
   const displayRating = () => {
     const max = restaurant.rating;
     const emptyStars = 5 - Math.ceil(max);
@@ -311,11 +314,6 @@ const Details = (props) => {
         </Row>
         <br />
 
-        {/* Restaurant Title */}
-        <Row className="justify-content-md-center">
-
-        </Row>
-
         {/* Google Maps */}
         <Row className="justify-content-md-center">
           <Card style={{
@@ -338,8 +336,8 @@ const Details = (props) => {
                 }}
               >
                 <Marker
-                  title={'The marker`s title will appear as a tooltip.'} //mouse over
-                  name={'SOMA'}
+                  title={`${restaurant.name}`} //mouse over
+                  name={`${restaurant.name}`}
                   onClick={onMarkerClick}
                   position={{ lat: restaurant.coordinates.latitude, lng: restaurant.coordinates.longitude }}
                 />
