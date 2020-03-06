@@ -18,7 +18,7 @@ import { MdLocalPhone, MdLocationOn } from 'react-icons/md';
 const anywhere = 'https://cors-anywhere.herokuapp.com/';
 
 // Enter your own Yelp Fusion API key here
-const YELP_API_KEY = 'yR15w8bu1wHsBvCaLBOTjSE19XdcT0rwnd9CUAkRENxiBHBqkfNj2sAkTx-yzkY4n146e_nXFAo43nQlwWSp3xxCHpoO8kzwBY_aE9OklcwvTEc3x3zEdUdP-epSXnYx';
+const YELP_API_KEY = 'n4723HjFL6HV_NnAtILXkWEOstIKOV_Z7A6hpvtqsej5ivj7mWpHALmE8IDyimva1SElkUAnK4XNUa1qzRLQv7xaj3a2crW1jfP-1eteel6v9JaQcO838gpwXcRhXnYx';
 
 // Enter your own Google Maps API key here
 const MAPS_API_KEY = 'AIzaSyBKkqON7yV0e9pLsxgZeoR8l917lbOEOrU';

@@ -62,6 +62,15 @@ const SearchResults = (props) => {
         return prices;
       }
 
+      const displayAddress = (item, key) => {
+          let addresses = [];
+          addresses.push(<MdLocationOn color="#e53935" />);
+        if (item.address1 && item.address1 !== "") {
+            addresses.push(`${item.address1}`)
+        }
+        addresses.push(`${item.city}, ${item.state} ${item.zip_code}`);
+        return addresses;
+      }
     // Map function to loop through the array of items and displays a card for each restaurant
     let Restaurants = props.restaurantsList.map((item, key) =>
         <Card key={key} className="card-margin" height="300">
@@ -72,7 +81,7 @@ const SearchResults = (props) => {
                 <Card.Title>{item.name}</Card.Title>
                 <Card.Text>
                     {/* If item does not have address1, don't display it  */}
-                    {/* {item.location.address1 !== "" ? <MdLocationOn color="#e53935" /> + `${item.location.address1}, ${item.location.city}, ${item.location.state} ${item.location.zip_code}` : <MdLocationOn color="#e53935" /> + `${item.location.city}, ${item.location.state} ${item.location.zip_code}`} */}
+                    {displayAddress(item.location)}
                 </Card.Text>
                 <Card.Text>{displayPrice(item.price, key)}</Card.Text>
                 <Card.Text>Rating: {displayRating(item.rating)}</Card.Text>
