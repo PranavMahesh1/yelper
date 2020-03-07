@@ -47,7 +47,8 @@ const HomePage = (props) => {
     let [location, setLocation] = useState("");
     let [restaurantsList, setRestaurantsList] = useState([]);
     let [geoLocation, setGeoLocation] = useState({});
-    const [priceFilter, setPriceFilter ] = useState({ check1: 0, check2: 0, check3: 0, check4: 0 });
+    const [checkFilter, setCheckFilter ] = useState([ 1, 1, 1, 1 ]);
+    const [priceFilter, setPriceFilter ] = useState("1,2,3,4");
     const [modalShow, setModalShow] = useState(false);
 
     let getLocation = () => {
@@ -59,7 +60,7 @@ const HomePage = (props) => {
                 // success callback
                 console.log("Location: ", position.coords.latitude, position.coords.longitude);
                 setGeoLocation(position.coords);
-                axios.get(`${anywhere}https://api.yelp.com/v3/businesses/search?term=${restaurant}&categories=food&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&radius=15000`, {
+                axios.get(`${anywhere}https://api.yelp.com/v3/businesses/search?term=${restaurant}&categories=food&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&radius=15000&price=${priceFilter}`, {
                     headers: {
                         Authorization: `Bearer ${API_KEY}`
                     }
@@ -90,18 +91,44 @@ const HomePage = (props) => {
         setLocation(event.target.value);
     }
 
-    const onChangePrice = (event) => {
-        let filter = priceFilter;
-        filter.check1 = event.target.checked;
-        filter.check2 = event.target.checked;
-        filter.check3 = event.target.checked;
-        filter.check4 = event.target.checked;
-        console.log(event);
+    const onChangePrice = (event, checkbox) => {
+        let filter = checkFilter;
+        const checkedStatus = event.target.checked ? 1 : 0
+        
+        switch(checkbox){
+            case 0:
+                filter[0] = checkedStatus;
+                break;
+            case 1:
+                filter[1] = checkedStatus;
+                break;    
+            case 2:
+                filter[2] = checkedStatus;
+                break;    
+            case 3:
+                filter[3] = checkedStatus;
+                break;  
+            default:
+                break;
+        }
+        const result = [];
+        filter.forEach((item, index) => {
+            return item === 1 ? result.push(index + 1) : null
+        });
+
+        setCheckFilter(filter);
+        if (result.toString().length === 0) {
+            setPriceFilter("1,2,3,4");
+        } else {
+            setPriceFilter(result.toString()); // [2,3,4] "2,3,4"
+        }
+        console.log(filter, checkbox);
+        console.log(result.toString(), checkbox);
     }
 
     const searchRestaurant = (event) => {
         // Send a GET request to the Yelp API and filter businesses to food
-        axios.get(`${anywhere}https://api.yelp.com/v3/businesses/search?term=${restaurant}&categories=food&location=${location}`, {
+        axios.get(`${anywhere}https://api.yelp.com/v3/businesses/search?term=${restaurant}&categories=food&location=${location}&price=${priceFilter}`, {
             headers: {
                 Authorization: `Bearer ${API_KEY}`
             }
@@ -168,7 +195,9 @@ const HomePage = (props) => {
                                         <InputGroup.Text>
                                             $
                                 </InputGroup.Text>
-                                        <InputGroup.Checkbox onChange={onChangePrice} aria-label="Checkbox for following text input" />
+                                        <InputGroup.Checkbox onChange={(event)=>{
+                                            onChangePrice(event, 0);
+                                        }} aria-label="Checkbox for following text input" checked={ checkFilter[0]===1? "checked" : null} />
                                     </InputGroup.Prepend>
 
                                     <InputGroup.Prepend style={{
@@ -177,7 +206,9 @@ const HomePage = (props) => {
                                         <InputGroup.Text>
                                             $$
                                 </InputGroup.Text>
-                                        <InputGroup.Checkbox onChange={onChangePrice} aria-label="Checkbox for following text input" />
+                                        <InputGroup.Checkbox onChange={(event)=>{
+                                            onChangePrice(event, 1);
+                                        }} aria-label="Checkbox for following text input" checked={ checkFilter[1]===1? "checked" : null} />
                                         {/* <Form.Check label="label" type="checkbox" /> */}
                                     </InputGroup.Prepend>
 
@@ -187,7 +218,9 @@ const HomePage = (props) => {
                                         <InputGroup.Text>
                                             $$$
                                 </InputGroup.Text>
-                                        <InputGroup.Checkbox onChange={onChangePrice} aria-label="Checkbox for following text input" />
+                                        <InputGroup.Checkbox onChange={(event)=>{
+                                            onChangePrice(event, 2);
+                                        }} aria-label="Checkbox for following text input" checked={ checkFilter[2]===1? "checked" : null} />
                                         {/* <Form.Check label="label" type="checkbox" /> */}
                                     </InputGroup.Prepend>
 
@@ -197,7 +230,9 @@ const HomePage = (props) => {
                                         <InputGroup.Text>
                                             $$$$
                                 </InputGroup.Text>
-                                        <InputGroup.Checkbox onChange={onChangePrice} aria-label="Checkbox for following text input" />
+                                        <InputGroup.Checkbox onChange={(event)=>{
+                                            onChangePrice(event, 3);
+                                        }} aria-label="Checkbox for following text input" checked={ checkFilter[3]===1? "checked" : null} />
                                         {/* <Form.Check label="label" type="checkbox" /> */}
                                     </InputGroup.Prepend>
                                 </InputGroup>
