@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5a353d5a58b314cd960efa10ad6bb088",
+    "revision": "855b133980de459d24eaf643ac9f39c0",
     "url": "/yelper/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/yelper/static/css/2.47e06e2e.chunk.css"
   },
   {
-    "revision": "05e24f9a5200f53900eb",
+    "revision": "24d2675dee5b41558ce7",
     "url": "/yelper/static/css/main.7ab682bd.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/yelper/static/js/2.3a34778a.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "05e24f9a5200f53900eb",
-    "url": "/yelper/static/js/main.f5260e7f.chunk.js"
+    "revision": "24d2675dee5b41558ce7",
+    "url": "/yelper/static/js/main.839b9b26.chunk.js"
   },
   {
     "revision": "bb8e4d65dd92207515ab",
