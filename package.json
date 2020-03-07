@@ -1,6 +1,6 @@
 {
-  "name": "restaurant-searcher",
-  "homepage": "https://PranavMahesh1.github.io/restaurant-searcher",
+  "name": "yelper",
+  "homepage": "https://PranavMahesh1.github.io/yelper",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
