@@ -13,7 +13,7 @@ const SearchResults = (props) => {
   const history = useHistory()
 
   function restaurantDetails (item) {
-    history.push('/details', {
+    history.push('/yelper/details', {
       // Link to /details and pass in detailsObject as a prop, which contains item
       detailsObject: item
     })

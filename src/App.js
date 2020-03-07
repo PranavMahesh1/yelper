@@ -10,11 +10,11 @@ function App () {
   // Define the path and what component to use at the path using routes
     <Router>
       <Switch>
-        <Route path='/details'>
+        <Route path='/yelper/details'>
           <Details />
         </Route>
 
-        <Route path='/'>
+        <Route path='/yelper'>
           <HomePage />
         </Route>
 
