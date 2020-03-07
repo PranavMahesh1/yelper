@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/restaurant-searcher/static/css/main.7ab682bd.chunk.css",
-    "main.js": "/restaurant-searcher/static/js/main.15f44da6.chunk.js",
-    "main.js.map": "/restaurant-searcher/static/js/main.15f44da6.chunk.js.map",
-    "runtime-main.js": "/restaurant-searcher/static/js/runtime-main.43aa011f.js",
-    "runtime-main.js.map": "/restaurant-searcher/static/js/runtime-main.43aa011f.js.map",
-    "static/css/2.47e06e2e.chunk.css": "/restaurant-searcher/static/css/2.47e06e2e.chunk.css",
-    "static/js/2.991015ec.chunk.js": "/restaurant-searcher/static/js/2.991015ec.chunk.js",
-    "static/js/2.991015ec.chunk.js.map": "/restaurant-searcher/static/js/2.991015ec.chunk.js.map",
-    "index.html": "/restaurant-searcher/index.html",
-    "precache-manifest.8e99f05e917bb08c9ace62018ff372e6.js": "/restaurant-searcher/precache-manifest.8e99f05e917bb08c9ace62018ff372e6.js",
-    "service-worker.js": "/restaurant-searcher/service-worker.js",
-    "static/css/2.47e06e2e.chunk.css.map": "/restaurant-searcher/static/css/2.47e06e2e.chunk.css.map",
-    "static/css/main.7ab682bd.chunk.css.map": "/restaurant-searcher/static/css/main.7ab682bd.chunk.css.map",
-    "static/js/2.991015ec.chunk.js.LICENSE.txt": "/restaurant-searcher/static/js/2.991015ec.chunk.js.LICENSE.txt"
+    "main.css": "/yelper/static/css/main.7ab682bd.chunk.css",
+    "main.js": "/yelper/static/js/main.f5260e7f.chunk.js",
+    "main.js.map": "/yelper/static/js/main.f5260e7f.chunk.js.map",
+    "runtime-main.js": "/yelper/static/js/runtime-main.c9bace82.js",
+    "runtime-main.js.map": "/yelper/static/js/runtime-main.c9bace82.js.map",
+    "static/css/2.47e06e2e.chunk.css": "/yelper/static/css/2.47e06e2e.chunk.css",
+    "static/js/2.3a34778a.chunk.js": "/yelper/static/js/2.3a34778a.chunk.js",
+    "static/js/2.3a34778a.chunk.js.map": "/yelper/static/js/2.3a34778a.chunk.js.map",
+    "index.html": "/yelper/index.html",
+    "precache-manifest.cd2b5f9d0bdbce09e63e041c60c3fe8d.js": "/yelper/precache-manifest.cd2b5f9d0bdbce09e63e041c60c3fe8d.js",
+    "service-worker.js": "/yelper/service-worker.js",
+    "static/css/2.47e06e2e.chunk.css.map": "/yelper/static/css/2.47e06e2e.chunk.css.map",
+    "static/css/main.7ab682bd.chunk.css.map": "/yelper/static/css/main.7ab682bd.chunk.css.map",
+    "static/js/2.3a34778a.chunk.js.LICENSE.txt": "/yelper/static/js/2.3a34778a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.43aa011f.js",
+    "static/js/runtime-main.c9bace82.js",
     "static/css/2.47e06e2e.chunk.css",
-    "static/js/2.991015ec.chunk.js",
+    "static/js/2.3a34778a.chunk.js",
     "static/css/main.7ab682bd.chunk.css",
-    "static/js/main.15f44da6.chunk.js"
+    "static/js/main.f5260e7f.chunk.js"
   ]
 }
