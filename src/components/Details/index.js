@@ -19,15 +19,15 @@ const MAPS_API_KEY = 'AIzaSyBKkqON7yV0e9pLsxgZeoR8l917lbOEOrU'
 
 const Details = (props) => {
   // Create location object
-  const location = useLocation();
+  const location = useLocation()
 
   // Restaurant is the prop of location.state - contains the specific restaurant that was clicked on
-  const [restaurant, setRestaurant] = useState(location.state.detailsObject);
+  const [restaurant, setRestaurant] = useState(location.state.detailsObject)
 
   // Map stuff
-  const [showingInfoWindow, setShowInfoWindow] = useState(false); // Hides or shows the infoWindow
-  const [activeMarker, setActiveMarker] = useState({}); // Shows the active marker upon click
-  const [selectedPlace, setSelectedPlace] = useState({}); // Shows the infoWindow to the selected place upon a marker
+  const [showingInfoWindow, setShowInfoWindow] = useState(false) // Hides or shows the infoWindow
+  const [activeMarker, setActiveMarker] = useState({}) // Shows the active marker upon click
+  const [selectedPlace, setSelectedPlace] = useState({}) // Shows the infoWindow to the selected place upon a marker
 
   // Execute this when site loads
   useEffect(() => {
@@ -56,7 +56,8 @@ const Details = (props) => {
       <div style={{
         overflow: 'hidden',
         height: '400px'
-      }}>
+      }}
+      >
         <img
           className='d-block w-100'
           src={item}
@@ -93,52 +94,52 @@ const Details = (props) => {
   }
 
   // Find whether number is float or not
-  function isFloat(n) {
-    return Number(n) === n && n % 1 !== 0;
+  function isFloat (n) {
+    return Number(n) === n && n % 1 !== 0
   }
 
   /* Function that takes the rating and displays that many stars.
      If number is a float, round to the .5 - may not be necessary for the Yelp API.
   */
   const displayRating = () => {
-    const max = restaurant.rating;
-    const emptyStars = 5 - Math.ceil(max);
-    const stars = [];
+    const max = restaurant.rating
+    const emptyStars = 5 - Math.ceil(max)
+    const stars = []
     if (isFloat(max)) {
       // 3.2 -> push 3 full stars
-      const floor = Math.floor(max);
+      const floor = Math.floor(max)
       for (let i = 1; i <= floor; i++) {
-        stars.push(<IoIosStar color='orange' />);
+        stars.push(<IoIosStar color='orange' />)
       }
       // push a half star
-      stars.push(<IoIosStarHalf color='orange' />);
+      stars.push(<IoIosStarHalf color='orange' />)
     } else {
       // If whole number, just push that many full stars
       for (let i = 1; i <= max; i++) {
-        stars.push(<IoIosStar color='orange' />);
+        stars.push(<IoIosStar color='orange' />)
       }
     }
 
-    let j = 1;
+    let j = 1
     while (j <= emptyStars) {
       // push remaining empty stars
-      stars.push(<IoIosStarOutline color='orange' />);
-      j++;
+      stars.push(<IoIosStarOutline color='orange' />)
+      j++
     }
-    return stars;
+    return stars
   }
 
   // Displays open hours of restaurant
   const displayHours = () => {
-    const hourList = [];
-    let day = '';
+    const hourList = []
+    let day = ''
     // If hours exist
     if (restaurant.hours && restaurant.hours[0].open) {
-      const hours = restaurant.hours[0].open; // all the hours
+      const hours = restaurant.hours[0].open // all the hours
       // Filter if hours are there
       if ((hours.filter(item => item.day === 0)).length > 0) {
         // checking the day
-        day = hours.filter(item => item.day === 0);
+        day = hours.filter(item => item.day === 0)
         hourList.push(
           <tr>
             <td>Monday</td>
@@ -159,7 +160,7 @@ const Details = (props) => {
         )
       }
       if ((hours.filter(item => item.day === 1)).length > 0) {
-        day = hours.filter(item => item.day === 1);
+        day = hours.filter(item => item.day === 1)
         hourList.push(
           <tr>
             <td>Tuesday</td>
@@ -179,7 +180,7 @@ const Details = (props) => {
         )
       }
       if ((hours.filter(item => item.day === 2)).length > 0) {
-        day = hours.filter(item => item.day === 2);
+        day = hours.filter(item => item.day === 2)
         hourList.push(
           <tr>
             <td>Wednesday</td>
@@ -199,7 +200,7 @@ const Details = (props) => {
         )
       }
       if ((hours.filter(item => item.day === 3)).length > 0) {
-        day = hours.filter(item => item.day === 3);
+        day = hours.filter(item => item.day === 3)
         hourList.push(
           <tr>
             <td>Thursday</td>
@@ -219,7 +220,7 @@ const Details = (props) => {
         )
       }
       if ((hours.filter(item => item.day === 4)).length > 0) {
-        day = hours.filter(item => item.day === 4);
+        day = hours.filter(item => item.day === 4)
         hourList.push(
           <tr>
             <td>Friday</td>
@@ -239,7 +240,7 @@ const Details = (props) => {
         )
       }
       if ((hours.filter(item => item.day === 5)).length > 0) {
-        day = hours.filter(item => item.day === 5);
+        day = hours.filter(item => item.day === 5)
         hourList.push(
           <tr>
             <td>Saturday</td>
@@ -259,7 +260,7 @@ const Details = (props) => {
         )
       }
       if ((hours.filter(item => item.day === 6)).length > 0) {
-        day = hours.filter(item => item.day === 6);
+        day = hours.filter(item => item.day === 6)
         hourList.push(
           <tr>
             <td>Sunday</td>
@@ -297,25 +298,25 @@ const Details = (props) => {
 
   const timeConvert = (time) => {
     // Check correct time format and split into components
-    time = time.toString().match(/^([01]\d|2[0-3])([0-5]\d)/);
-    let formatedTime = '';
+    time = time.toString().match(/^([01]\d|2[0-3])([0-5]\d)/)
+    let formatedTime = ''
     if (time.length > 1) { // If time format correct
-      formatedTime = (time[1] % 12 || 12) + ':' + time[2] + (time[1] < 12 ? ' AM' : ' PM');
+      formatedTime = (time[1] % 12 || 12) + ':' + time[2] + (time[1] < 12 ? ' AM' : ' PM')
     }
-    return formatedTime; // return adjusted time or original string
+    return formatedTime // return adjusted time or original string
   }
 
   // Take the price value and display as the dollar signs
   const displayPrice = () => {
-    const price = restaurant.price;
-    const prices = [];
+    const price = restaurant.price
+    const prices = []
     if (price != null) {
-      prices.push(<span>Price: </span>);
+      prices.push(<span>Price: </span>)
       for (let i = 0; i < price.length; i++) {
-        prices.push(<FaDollarSign color='green' />);
+        prices.push(<FaDollarSign color='green' />)
       }
     }
-    return prices;
+    return prices
   }
 
   // Actual return of Details component
