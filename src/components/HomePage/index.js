@@ -70,6 +70,32 @@ function NoLocationModal (props) {
   )
 }
 
+function ErrorModal (props, title, description) {
+  return (
+    <Modal
+      {...props}
+      size='lg'
+      aria-labelledby='contained-modal-title-vcenter'
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id='contained-modal-title-vcenter'>
+        {title}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+        {description}
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        {/* Hides Modal when close is clicked */}
+        <Button variant='danger' onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  )
+}
+
 // Function for the homepage
 const HomePage = (props) => {
   // Define states
@@ -300,14 +326,19 @@ const HomePage = (props) => {
 
             {/* When button is pressed, call searchRestaurant() */}
             <Button variant='dark' onClick={searchRestaurant}>Submit</Button>
-            <NoLocationModal
+            <ErrorModal
+              title={"Must enter location"}
+              description={"You must also enter a location to find restaurants."}
               show={locationModalShow}
               onHide={() => setLocationModalShow(false)}
             />
             {/* When button is pressed, call searchGeoRestaurant() and get user location */}
             <Button variant='dark' onClick={searchGeoRestaurant} className='float-right'>Submit with Your Location</Button>
             {/* Modal hidden and will show if location cannot be found */}
-            <GeoErrorModal
+            <ErrorModal
+              title={"Cannot find user location"}
+              description={"Make sure your browser supports HTML5 Geolocation and that the "
+              + "Location permission is set to 'Allow' for this site."}
               show={modalShow}
               onHide={() => setModalShow(false)}
             />
