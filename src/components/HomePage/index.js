@@ -17,7 +17,7 @@ const API_KEY = 'n4723HjFL6HV_NnAtILXkWEOstIKOV_Z7A6hpvtqsej5ivj7mWpHALmE8IDyimv
 /* Modal (alert box) for when user does not set location to allow and
 tries to click 'Submit with your Location' */
 
-function MyVerticallyCenteredModal (props) {
+function GeoErrorModal (props) {
   return (
     <Modal
       {...props}
@@ -27,13 +27,39 @@ function MyVerticallyCenteredModal (props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>
-                    Cannot find user location
+        Cannot find user location
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>
-                    Make sure your browser supports HTML5 Geolocation and that the
-                    Location permission is set to 'Allow' for this site.
+        Make sure your browser supports HTML5 Geolocation and that the
+        Location permission is set to 'Allow' for this site.
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        {/* Hides Modal when close is clicked */}
+        <Button variant='danger' onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  )
+}
+
+function NoLocationModal (props) {
+  return (
+    <Modal
+      {...props}
+      size='lg'
+      aria-labelledby='contained-modal-title-vcenter'
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id='contained-modal-title-vcenter'>
+        Must enter location
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+        You must also enter a location to find restaurants.
         </p>
       </Modal.Body>
       <Modal.Footer>
@@ -54,6 +80,24 @@ const HomePage = (props) => {
   const [checkFilter, setCheckFilter] = useState([1, 1, 1, 1])
   const [priceFilter, setPriceFilter] = useState('1,2,3,4')
   const [modalShow, setModalShow] = useState(false)
+  const [locationModalShow, setLocationModalShow] = useState(false)
+
+  const searchRestaurant = (event) => {
+    /* Send a GET request to the Yelp API and filter businesses to food, pass
+        in price filter and restaurant name */
+    axios.get(`${anywhere}https://api.yelp.com/v3/businesses/search?term=${restaurant}&categories=food&location=${location}&price=${priceFilter}`, {
+      headers: {
+        Authorization: `Bearer ${API_KEY}`
+      }
+    }).then((res) => {
+      // Set business array in restaurantsList state
+      setRestaurantsList(res.data.businesses)
+    }).catch((err) => {
+      // Otherwise catch error and log it to console
+      console.log('Error occured: ', err)
+      setLocationModalShow(true)
+    })
+  }
 
   // Gets user location when button is pressed
   const searchGeoRestaurant = () => {
@@ -134,21 +178,6 @@ const HomePage = (props) => {
     }
   }
 
-  const searchRestaurant = (event) => {
-    /* Send a GET request to the Yelp API and filter businesses to food, pass
-        in price filter and restaurant name */
-    axios.get(`${anywhere}https://api.yelp.com/v3/businesses/search?term=${restaurant}&categories=food&location=${location}&price=${priceFilter}`, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`
-      }
-    }).then((res) => {
-      // Set business array in restaurantsList state
-      setRestaurantsList(res.data.businesses)
-    }).catch((err) => {
-      // Otherwise catch error and log it to console
-      console.log('Error occured: ', err)
-    })
-  }
   return (
   // All the stuff to display on home page
     <div>
@@ -268,10 +297,14 @@ const HomePage = (props) => {
 
             {/* When button is pressed, call searchRestaurant() */}
             <Button variant='dark' onClick={searchRestaurant}>Submit</Button>
+            <NoLocationModal
+              show={locationModalShow}
+              onHide={() => setLocationModalShow(false)}
+            />
             {/* When button is pressed, call searchGeoRestaurant() and get user location */}
             <Button variant='dark' onClick={searchGeoRestaurant} className='float-right'>Submit with Your Location</Button>
             {/* Modal hidden and will show if location cannot be found */}
-            <MyVerticallyCenteredModal
+            <GeoErrorModal
               show={modalShow}
               onHide={() => setModalShow(false)}
             />
