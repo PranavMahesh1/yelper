@@ -83,6 +83,10 @@ const HomePage = (props) => {
   const [locationModalShow, setLocationModalShow] = useState(false)
 
   const searchRestaurant = (event) => {
+    // Display modal if location is not entered
+    if (location.length === 0) {
+      setLocationModalShow(true)
+    }
     /* Send a GET request to the Yelp API and filter businesses to food, pass
         in price filter and restaurant name */
     axios.get(`${anywhere}https://api.yelp.com/v3/businesses/search?term=${restaurant}&categories=food&location=${location}&price=${priceFilter}`, {
@@ -95,7 +99,6 @@ const HomePage = (props) => {
     }).catch((err) => {
       // Otherwise catch error and log it to console
       console.log('Error occured: ', err)
-      setLocationModalShow(true)
     })
   }
 
