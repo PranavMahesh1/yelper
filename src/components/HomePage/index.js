@@ -14,10 +14,8 @@ const anywhere = 'https://cors-anywhere.herokuapp.com/'
 // Enter your own Yelp Fusion API key here
 const API_KEY = 'n4723HjFL6HV_NnAtILXkWEOstIKOV_Z7A6hpvtqsej5ivj7mWpHALmE8IDyimva1SElkUAnK4XNUa1qzRLQv7xaj3a2crW1jfP-1eteel6v9JaQcO838gpwXcRhXnYx'
 
-/* Modal (alert box) for when user does not set location to allow and
-tries to click 'Submit with your Location' */
-
-function GeoErrorModal (props) {
+// Made only one Modal (alert box) for all alerts to increase readability
+function ErrorModal (props) {
   return (
     <Modal
       {...props}
@@ -27,65 +25,12 @@ function GeoErrorModal (props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>
-        Cannot find user location
+          {props.title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>
-        Make sure your browser supports HTML5 Geolocation and that the
-        Location permission is set to 'Allow' for this site.
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        {/* Hides Modal when close is clicked */}
-        <Button variant='danger' onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  )
-}
-
-function NoLocationModal (props) {
-  return (
-    <Modal
-      {...props}
-      size='lg'
-      aria-labelledby='contained-modal-title-vcenter'
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>
-        Must enter location
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>
-        You must also enter a location to find restaurants.
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        {/* Hides Modal when close is clicked */}
-        <Button variant='danger' onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  )
-}
-
-function ErrorModal (props, title, description) {
-  return (
-    <Modal
-      {...props}
-      size='lg'
-      aria-labelledby='contained-modal-title-vcenter'
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>
-        {title}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>
-        {description}
+          {props.description}
         </p>
       </Modal.Body>
       <Modal.Footer>
@@ -106,12 +51,26 @@ const HomePage = (props) => {
   const [checkFilter, setCheckFilter] = useState([1, 1, 1, 1])
   const [priceFilter, setPriceFilter] = useState('1,2,3,4')
   const [modalShow, setModalShow] = useState(false)
-  const [locationModalShow, setLocationModalShow] = useState(false)
+  const [modalState, setModalState] = useState({ title: '', description: '' })
 
   const searchRestaurant = (event) => {
-    // Display modal if location is not entered
+    // If restaurant and location aren't entered
+    if (restaurant.length === 0 && location.length === 0) {
+      setModalState({
+        title: 'Enter a restaurant and location',
+        description: 'Please enter both a restaurant and a location.'
+      })
+      setModalShow(true)
+      return
+    }
+    // If restaurant is entered but location isn't
     if (location.length === 0) {
-      setLocationModalShow(true)
+      setModalState({
+        title: 'Enter a location',
+        description: 'Please enter a location in addition to the restaurant.'
+      })
+      setModalShow(true)
+      return
     }
     /* Send a GET request to the Yelp API and filter businesses to food, pass
         in price filter and restaurant name */
@@ -123,7 +82,12 @@ const HomePage = (props) => {
       // Set business array in restaurantsList state
       setRestaurantsList(res.data.businesses)
     }).catch((err) => {
-      // Otherwise catch error and log it to console
+      // If there's a problem with API/CORS (429: Too Many Requests)
+      setModalState({
+        title: 'Error with API',
+        description: 'There seems to be a problem with the API. Please try again later.'
+      })
+      setModalShow(true)
       console.log('Error occured: ', err)
     })
   }
@@ -148,9 +112,18 @@ const HomePage = (props) => {
         }).catch((err) => {
           // Otherwise catch error and log it to console
           console.log('Error occured: ', err)
+          setModalState({
+            title: 'Error with API',
+            description: 'There seems to be a problem with the API. Please try again later.'
+          })
+          setModalShow(true)
         })
       }, (err) => {
         // Show error modal if location cannot be obtained
+        setModalState({
+          title: 'Cannot find user location',
+          description: 'Make sure your browser supports HTML5 Geolocation and that the Location permission is set to \'Allow\' for this site.'
+        })
         setModalShow(true)
       })
     }
@@ -264,7 +237,7 @@ const HomePage = (props) => {
                   }}
                   >
                     <InputGroup.Text>
-                                            $
+                    $
                     </InputGroup.Text>
 
                     <InputGroup.Checkbox
@@ -280,7 +253,7 @@ const HomePage = (props) => {
                   }}
                   >
                     <InputGroup.Text>
-                                            $$
+                    $$
                     </InputGroup.Text>
 
                     <InputGroup.Checkbox
@@ -296,7 +269,7 @@ const HomePage = (props) => {
                   }}
                   >
                     <InputGroup.Text>
-                                            $$$
+                    $$$
                     </InputGroup.Text>
 
                     <InputGroup.Checkbox
@@ -311,7 +284,7 @@ const HomePage = (props) => {
                   }}
                   >
                     <InputGroup.Text>
-                                            $$$$
+                    $$$$
                     </InputGroup.Text>
 
                     <InputGroup.Checkbox
@@ -326,26 +299,18 @@ const HomePage = (props) => {
 
             {/* When button is pressed, call searchRestaurant() */}
             <Button variant='dark' onClick={searchRestaurant}>Submit</Button>
-            <ErrorModal
-              title={"Must enter location"}
-              description={"You must also enter a location to find restaurants."}
-              show={locationModalShow}
-              onHide={() => setLocationModalShow(false)}
-            />
             {/* When button is pressed, call searchGeoRestaurant() and get user location */}
             <Button variant='dark' onClick={searchGeoRestaurant} className='float-right'>Submit with Your Location</Button>
-            {/* Modal hidden and will show if location cannot be found */}
-            <ErrorModal
-              title={"Cannot find user location"}
-              description={"Make sure your browser supports HTML5 Geolocation and that the "
-              + "Location permission is set to 'Allow' for this site."}
-              show={modalShow}
-              onHide={() => setModalShow(false)}
-            />
           </Card.Body>
         </Card>
         {/* If there are restaurants, show SearchResults component, otherwise don't show anything */}
         {restaurantsList.length > 0 ? <SearchResults restaurantsList={restaurantsList} /> : null}
+        <ErrorModal
+          title={modalState.title}
+          description={modalState.description}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
       </Container>
     </div>
   )
