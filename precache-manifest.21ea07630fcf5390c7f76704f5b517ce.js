@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "976f593fa1ab1b32045c37c1b2229d30",
+    "revision": "10460bb8387eeff91e027f17d07a3db4",
     "url": "/yelper/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/yelper/static/css/2.47e06e2e.chunk.css"
   },
   {
-    "revision": "e1b224ffe1302586992a",
-    "url": "/yelper/static/css/main.7ab682bd.chunk.css"
+    "revision": "8890be7fc9c685169b9c",
+    "url": "/yelper/static/css/main.d9ede035.chunk.css"
   },
   {
     "revision": "ba21190cbfa1076b5f96",
@@ -20,11 +20,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/yelper/static/js/2.6b1b52a3.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "e1b224ffe1302586992a",
-    "url": "/yelper/static/js/main.7bfc4812.chunk.js"
+    "revision": "8890be7fc9c685169b9c",
+    "url": "/yelper/static/js/main.85fdd592.chunk.js"
   },
   {
     "revision": "bb8e4d65dd92207515ab",
     "url": "/yelper/static/js/runtime-main.c9bace82.js"
+  },
+  {
+    "revision": "6831c4b71f61c6eaf73f0eb1b9c2d895",
+    "url": "/yelper/static/media/background.6831c4b7.jpg"
   }
 ]);
