@@ -12,7 +12,7 @@ import { MdLocationCity, MdRestaurant } from 'react-icons/md'
 const anywhere = 'https://cors-anywhere.herokuapp.com/'
 
 // Enter your own Yelp Fusion API key here
-const API_KEY = 'n4723HjFL6HV_NnAtILXkWEOstIKOV_Z7A6hpvtqsej5ivj7mWpHALmE8IDyimva1SElkUAnK4XNUa1qzRLQv7xaj3a2crW1jfP-1eteel6v9JaQcO838gpwXcRhXnYx'
+const API_KEY = ''
 
 // Made only one Modal (alert box) for all alerts to increase readability
 function ErrorModal (props) {

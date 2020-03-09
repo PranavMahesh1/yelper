@@ -12,10 +12,10 @@ import { MdLocalPhone, MdLocationOn } from 'react-icons/md'
 const anywhere = 'https://cors-anywhere.herokuapp.com/'
 
 // Enter your own Yelp Fusion API key here
-const YELP_API_KEY = 'n4723HjFL6HV_NnAtILXkWEOstIKOV_Z7A6hpvtqsej5ivj7mWpHALmE8IDyimva1SElkUAnK4XNUa1qzRLQv7xaj3a2crW1jfP-1eteel6v9JaQcO838gpwXcRhXnYx'
+const YELP_API_KEY = ''
 
 // Enter your own Google Maps API key here
-const MAPS_API_KEY = 'AIzaSyBKkqON7yV0e9pLsxgZeoR8l917lbOEOrU'
+const MAPS_API_KEY = ''
 
 const Details = (props) => {
   // Create location object
