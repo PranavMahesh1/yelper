@@ -196,11 +196,10 @@ const HomePage = (props) => {
             <Row className='justify-content-md-center'>
               <Col>
                 <h1><center>Yelper</center></h1>
-                <p>Enter the restaurant type/name and location and click Submit, or enter just the restaurant and click Submit with Your Location.</p>
                 {/* Form for entering Restaurant Name and Location */}
                 <Form>
                   <Form.Group controlId='basic'>
-                    <Form.Label>Enter Restaurant Name/Type</Form.Label>
+                    <Form.Label>Enter Restaurant Name/Food Style</Form.Label>
                     {/* When Form text changes, call onChangeRestaurant() */}
                     <InputGroup>
                       <InputGroup.Prepend>
@@ -300,7 +299,7 @@ const HomePage = (props) => {
             {/* When button is pressed, call searchRestaurant() */}
             <Button variant='dark' onClick={searchRestaurant}>Submit</Button>
             {/* When button is pressed, call searchGeoRestaurant() and get user location */}
-            <Button variant='dark' onClick={searchGeoRestaurant} className='float-right'>Submit with Your Location</Button>
+            <Button variant='dark' onClick={searchGeoRestaurant} className='float-right'>Restaurants Near Me</Button>
           </Card.Body>
         </Card>
         {/* If there are restaurants, show SearchResults component, otherwise don't show anything */}
