@@ -10,4 +10,4 @@ The application will retrieve 20 restaurants at most with some details. Click ``
 
 The project is currently deployed at [https://pranavmahesh1.github.io/yelper/](https://pranavmahesh1.github.io/yelper/ "https://pranavmahesh1.github.io/yelper/").
 
-If you would like to run this locally, clone the repo and run ```npm install``` to install all the dependencies needed. Afterwards, run ```yarn start``` to start the application.
+If you would like to run this locally, clone the repo and run ```npm install``` to install all the dependencies needed. You must also put your own Yelp Fusion API and Google Maps API keys in the ```index.js``` files in the ```HomePage``` and ```Details``` components. Afterwards, run ```yarn start``` to start the application.
