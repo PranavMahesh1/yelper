@@ -1,5 +1,5 @@
 // The component for the home page.
-// TODO: Loading screen, Modal for if you didn't enter name and pressed Submit?
+// TODO: Loading screen
 
 import axios from 'axios'
 import './style.css'
@@ -15,7 +15,7 @@ const anywhere = 'https://cors-anywhere.herokuapp.com/'
 const API_KEY = ''
 
 // Made only one Modal (alert box) for all alerts to increase readability
-function ErrorModal (props) {
+function ErrorModal(props) {
   return (
     <Modal
       {...props}
@@ -79,8 +79,17 @@ const HomePage = (props) => {
         Authorization: `Bearer ${API_KEY}`
       }
     }).then((res) => {
-      // Set business array in restaurantsList state
-      setRestaurantsList(res.data.businesses)
+      // Show Modal if no businesses are found so the user knows something happened
+      if (res.data.businesses.length <= 0) {
+        setModalState({
+          title: 'No results found',
+          description: 'No results were found. Please try a different search option.'
+        })
+        setModalShow(true)
+      } else {
+        // Set business array in restaurantsList state
+        setRestaurantsList(res.data.businesses)
+      }
     }).catch((err) => {
       // If there's a problem with API/CORS (429: Too Many Requests)
       setModalState({
@@ -107,8 +116,17 @@ const HomePage = (props) => {
             Authorization: `Bearer ${API_KEY}`
           }
         }).then((res) => {
-          // Set business array in restaurantsList state
-          setRestaurantsList(res.data.businesses)
+          // Show Modal if no businesses are found so the user knows something happened
+          if (res.data.businesses.length <= 0) {
+            setModalState({
+              title: 'No results found',
+              description: 'No results were found. Please try a different search option.'
+            })
+            setModalShow(true)
+          } else {
+            // Set business array in restaurantsList state
+            setRestaurantsList(res.data.businesses)
+          }
         }).catch((err) => {
           // Otherwise catch error and log it to console
           console.log('Error occured: ', err)
@@ -181,7 +199,7 @@ const HomePage = (props) => {
   }
 
   return (
-  // All the stuff to display on home page
+    // All the stuff to display on home page
     <div>
       <Container>
         <Card
@@ -236,12 +254,12 @@ const HomePage = (props) => {
                   }}
                   >
                     <InputGroup.Text>
-                    $
+                      $
                     </InputGroup.Text>
 
                     <InputGroup.Checkbox
                       onChange={(event) => {
-                      // Call onChangePrice() for each checkbox when checked/unchecked
+                        // Call onChangePrice() for each checkbox when checked/unchecked
                         onChangePrice(event, 0)
                       }} aria-label='Checkbox for following text input' checked={checkFilter[0] === 1 ? 'checked' : null}
                     />
@@ -252,7 +270,7 @@ const HomePage = (props) => {
                   }}
                   >
                     <InputGroup.Text>
-                    $$
+                      $$
                     </InputGroup.Text>
 
                     <InputGroup.Checkbox
@@ -268,7 +286,7 @@ const HomePage = (props) => {
                   }}
                   >
                     <InputGroup.Text>
-                    $$$
+                      $$$
                     </InputGroup.Text>
 
                     <InputGroup.Checkbox
@@ -283,7 +301,7 @@ const HomePage = (props) => {
                   }}
                   >
                     <InputGroup.Text>
-                    $$$$
+                      $$$$
                     </InputGroup.Text>
 
                     <InputGroup.Checkbox
