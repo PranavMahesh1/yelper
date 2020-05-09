@@ -80,7 +80,7 @@ const HomePage = (props) => {
       }
     }).then((res) => {
       // Show Modal if no businesses are found so the user knows something happened
-      if (res.data.businesses.length <= 0) {
+      if (res.data.businesses.length === 0) {
         setModalState({
           title: 'No results found',
           description: 'No results were found. Please try a different search option.'
@@ -117,7 +117,7 @@ const HomePage = (props) => {
           }
         }).then((res) => {
           // Show Modal if no businesses are found so the user knows something happened
-          if (res.data.businesses.length <= 0) {
+          if (res.data.businesses.length === 0) {
             setModalState({
               title: 'No results found',
               description: 'No results were found. Please try a different search option.'
