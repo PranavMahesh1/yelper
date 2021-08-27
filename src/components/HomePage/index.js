@@ -9,7 +9,7 @@ import SearchResults from './SearchResults'
 import { MdLocationCity, MdRestaurant } from 'react-icons/md'
 
 // CORS-Anywhere policy - Do not change
-const anywhere = 'https://cors-anywhere.herokuapp.com/'
+const anywhere = 'https://nameless-scrubland-76048.herokuapp.com/'
 
 // Enter your own Yelp Fusion API key here
 const API_KEY = ''

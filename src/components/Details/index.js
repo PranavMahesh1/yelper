@@ -9,7 +9,7 @@ import { IoIosStarHalf, IoIosStarOutline, IoIosStar } from 'react-icons/io'
 import { FaDollarSign } from 'react-icons/fa'
 import { MdLocalPhone, MdLocationOn } from 'react-icons/md'
 
-const anywhere = 'https://cors-anywhere.herokuapp.com/'
+const anywhere = 'https://nameless-scrubland-76048.herokuapp.com/'
 
 // Enter your own Yelp Fusion API key here
 const YELP_API_KEY = ''
